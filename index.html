@@ -15,7 +15,6 @@
       display: block;
     }
 
-    /* Texto central */
     .mensagem {
       position: absolute;
       top: 50%;
@@ -40,9 +39,19 @@
 
 <canvas id="fogos"></canvas>
 
-<audio id="musica" src="https://github.com/Nandohinsu/Parabensdudu/blob/main/happy.mp3" autoplay loop></audio>
+<!-- 🔊 ÁUDIO CORRIGIDO -->
+<audio id="musica" loop>
+  <source src="musicas/happy.mp3" type="audio/mp3">
+</audio>
 
 <script>
+const audio = document.getElementById("musica");
+
+// toca o áudio no primeiro clique
+window.addEventListener("click", () => {
+  audio.play().catch(e => console.log("Erro ao tocar:", e));
+}, { once: true }); // executa só 1 vez
+
 const canvas = document.getElementById("fogos");
 const ctx = canvas.getContext("2d");
 
@@ -50,10 +59,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let fogos = [];
-
-window.addEventListener("click", () => {
-  document.getElementById("musica").play();
-});
 
 class Particula {
   constructor(x, y, cor) {
@@ -68,7 +73,7 @@ class Particula {
   update() {
     this.x += this.velX;
     this.y += this.velY;
-    this.alpha -= 0.003; // mais lento ✨
+    this.alpha -= 0.003;
   }
 
   draw() {
